@@ -27,6 +27,7 @@ import {
 import { isNumber } from 'lodash';
 import ms from 'ms';
 
+import { MARKET_DATA_UPDATED } from '../../events/market-data-updated.event';
 import { ExchangeRatesByCurrency } from './interfaces/exchange-rate-data.interface';
 
 @Injectable()
@@ -355,7 +356,7 @@ export class ExchangeRateDataService {
     return undefined;
   }
 
-  @OnEvent('market-data.updated')
+  @OnEvent(MARKET_DATA_UPDATED)
   public onMarketDataUpdated(event: { symbol: string }) {
     this.exchangeRateCache.delete(event.symbol);
     this.pendingLoads.delete(event.symbol);

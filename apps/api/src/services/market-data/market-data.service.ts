@@ -14,6 +14,8 @@ import {
   Prisma
 } from '@prisma/client';
 
+import { MARKET_DATA_UPDATED } from '../../events/market-data-updated.event';
+
 @Injectable()
 export class MarketDataService {
   public constructor(
@@ -29,7 +31,7 @@ export class MarketDataService {
       }
     });
 
-    this.eventEmitter.emit('market-data.updated', { symbol });
+    this.eventEmitter.emit(MARKET_DATA_UPDATED, { symbol });
 
     return result;
   }
@@ -194,7 +196,7 @@ export class MarketDataService {
       }
     });
 
-    this.eventEmitter.emit('market-data.updated', { symbol });
+    this.eventEmitter.emit(MARKET_DATA_UPDATED, { symbol });
   }
 
   public async updateAssetProfileIdentifier(
@@ -212,10 +214,10 @@ export class MarketDataService {
       }
     });
 
-    this.eventEmitter.emit('market-data.updated', {
+    this.eventEmitter.emit(MARKET_DATA_UPDATED, {
       symbol: oldAssetProfileIdentifier.symbol
     });
-    this.eventEmitter.emit('market-data.updated', {
+    this.eventEmitter.emit(MARKET_DATA_UPDATED, {
       symbol: newAssetProfileIdentifier.symbol
     });
 
@@ -242,7 +244,7 @@ export class MarketDataService {
       update: { marketPrice: data.marketPrice, state: data.state }
     });
 
-    this.eventEmitter.emit('market-data.updated', {
+    this.eventEmitter.emit(MARKET_DATA_UPDATED, {
       symbol: where.dataSource_date_symbol.symbol
     });
 
@@ -287,7 +289,7 @@ export class MarketDataService {
 
     const symbols = [...new Set(data.map((d) => d.symbol as string))];
     for (const symbol of symbols) {
-      this.eventEmitter.emit('market-data.updated', { symbol });
+      this.eventEmitter.emit(MARKET_DATA_UPDATED, { symbol });
     }
 
     return result;

@@ -469,7 +469,7 @@ export class ActivitiesService {
     sortColumn,
     sortDirection = 'asc',
     startDate,
-    take = Number.MAX_SAFE_INTEGER,
+    take,
     types,
     userCurrency,
     userId,
